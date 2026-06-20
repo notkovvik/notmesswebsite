@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotMess — защищённый мессенджер</title>
+    <link rel="icon" type="image/png" href="notmessico.png">
+    <link rel="apple-touch-icon" href="notmessico.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #0e0e0e;
+            color: #fff;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .header-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .header-links a {
+            color: #aaa;
+            font-size: 14px;
+            transition: color .2s;
+        }
+        .header-links a:hover { color: #fff; }
+        .header-btn {
+            background: #0088cc;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background .2s;
+        }
+        .header-btn:hover { background: #0077b3; }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 80px 24px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            box-shadow: 0 0 60px rgba(0,136,204,.3);
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .hero h1 span { color: #0088cc; }
+        .hero p {
+            font-size: 18px;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: #0088cc;
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: background .2s, transform .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            background: #0077b3;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,.14); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        .feature-card {
+            background: #181818;
+            border: 1px solid #2f2f2f;
+            border-radius: 16px;
+            padding: 32px;
+            transition: border-color .2s, transform .2s;
+        }
+        .feature-card:hover {
+            border-color: #0088cc;
+            transform: translateY(-4px);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0,136,204,.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .feature-icon svg { width: 24px; height: 24px; stroke: #0088cc; fill: none; stroke-width: 2; }
+        .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: #aaa; line-height: 1.6; }
+
+        .apps {
+            text-align: center;
+            padding: 60px 24px 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .apps h2 { font-size: 32px; margin-bottom: 12px; }
+        .apps > p { color: #aaa; font-size: 16px; margin-bottom: 40px; }
+        .apps-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #212121;
+            border: 1px solid #2f2f2f;
+            border-radius: 14px;
+            padding: 14px 24px;
+            min-width: 200px;
+            transition: border-color .2s;
+            position: relative;
+            cursor: default;
+        }
+        .app-btn:hover { border-color: #0088cc; }
+        .app-btn svg { width: 28px; height: 28px; fill: #fff; flex-shrink: 0; }
+        .app-btn-text { text-align: left; }
+        .app-btn-text small { display: block; font-size: 11px; color: #888; }
+        .app-btn-text strong { font-size: 14px; }
+        .coming-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #0088cc;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal-window {
+            background: #181818;
+            border: 1px solid #2f2f2f;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+        }
+        .modal-window h2 { font-size: 24px; margin-bottom: 20px; }
+        .modal-window p { color: #aaa; line-height: 1.7; margin-bottom: 14px; font-size: 14px; }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #fff; }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid #2f2f2f;
+            color: #666;
+            font-size: 13px;
+        }
+        .footer a { color: #888; transition: color .2s; }
+        .footer a:hover { color: #fff; }
+        .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+
+        .team-section {
+            padding: 80px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+        .team-section h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 48px;
+            font-family: 'Inter', sans-serif;
+        }
+        .team-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin: 0 -24px;
+        }
+        .team-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #3f3f3f;
+            background: #1a1a1a;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background .2s, border-color .2s;
+            font-size: 20px;
+            user-select: none;
+        }
+        .team-arrow:hover { background: #2a2a2a; border-color: #0088cc; }
+        .team-arrow-left { left: -10px; }
+        .team-arrow-right { right: -10px; }
+        .team-arrow:active { transform: translateY(-50%) scale(.95); }
+        .team-grid {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 8px 32px 8px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .team-grid::-webkit-scrollbar { display: none; }
+        .team-card {
+            flex: 0 0 280px;
+            border: 2px solid #3f3f3f;
+            border-radius: 2rem;
+            padding: 24px;
+            width: 280px;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .3s ease;
+            background: transparent;
+        }
+        .team-card:hover { border-color: #0088cc; }
+        .team-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity .3s ease;
+            z-index: 0;
+        }
+        .team-card:hover .team-bg { opacity: 1; }
+        .team-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            opacity: 0;
+            transition: opacity .3s ease;
+            z-index: 1;
+            border-radius: 2rem;
+        }
+        .team-card:hover::after { opacity: 1; }
+        .team-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .team-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 4px;
+            position: relative;
+            z-index: 2;
+        }
+        .team-card p {
+            font-size: 18px;
+            color: #ccc;
+            margin: 0 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .team-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #0088cc;
+            color: #fff;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            transform: translateY(120px);
+            transition: transform .3s ease;
+            position: relative;
+            z-index: 2;
+            margin-top: 16px;
+        }
+        .team-card:hover .team-btn { transform: translateY(0); }
+        .team-btn:hover { background: #0077b3; }
+
+        @media (max-width: 768px) {
+            .header { padding: 12px 16px; }
+            .header-links a:not(.header-btn) { display: none; }
+            .hero-logo { width: 80px; }
+            .hero { padding: 40px 16px 32px; }
+            .hero h1 { font-size: 28px; }
+            .hero p { font-size: 15px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+            .features { padding: 32px 16px; gap: 12px; }
+            .feature-card { padding: 20px; }
+            .team-section { padding: 40px 16px; }
+            .team-section h2 { font-size: 28px; margin-bottom: 32px; }
+            .team-card { flex: 0 0 240px; width: 240px; height: 360px; padding: 16px; }
+            .team-avatar { width: 80px; height: 80px; }
+            .team-card h3 { font-size: 20px; }
+            .team-card p { font-size: 16px; }
+            .team-btn { transform: translateY(100px); padding: 14px; font-size: 16px; }
+            .team-arrow { display: none; }
+            .team-grid { padding: 8px 4px; gap: 12px; }
+            .apps { padding: 32px 16px; }
+            .apps h2 { font-size: 24px; }
+            .app-btn { min-width: 160px; padding: 12px 16px; }
+            .footer { padding: 24px 16px; }
+            .footer-links { gap: 12px; font-size: 13px; }
+            .modal-window { padding: 20px; margin: 16px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 22px; }
+            .hero p { font-size: 14px; }
+            .team-card { flex: 0 0 200px; width: 200px; height: 320px; }
+            .team-avatar { width: 64px; height: 64px; }
+            .team-card h3 { font-size: 17px; }
+            .team-card p { font-size: 14px; }
+            .team-btn { font-size: 14px; padding: 12px; transform: translateY(80px); }
+            .apps h2 { font-size: 20px; }
+            .app-btn { min-width: 140px; padding: 10px 14px; }
+            .app-btn svg { width: 22px; height: 22px; }
+            .footer-links { flex-direction: column; align-items: center; gap: 8px; }
+        }
+        .rotating-text { color: var(--accent); }
+        .cursor { animation: blink 0.8s step-end infinite; color: var(--accent); font-weight: 100; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="https://notmess.ru" class="header-logo">
+            <img src="notmessico.png" alt="NotMess">
+            NotMess
+        </a>
+        <div class="header-links">
+            <a href="#features">Возможности</a>
+            <a href="#team">Команда</a>
+            <a href="#apps">Скачать</a>
+            <a href="https://web.notmess.ru" class="header-btn">Открыть веб-версию</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="notmessico.png" alt="NotMess" class="hero-logo">
+        <h1><span>Защищённый</span> мессенджер<br>для <span class="rotating-text" id="rotating-text"></span><span class="cursor">|</span></h1>
+        <p>NotMess — это быстрый, безопасный и удобный мессенджер со сквозным шифрованием. Общайтесь свободно, где бы вы ни находились.</p>
+        <div class="hero-buttons">
+            <a href="https://web.notmess.ru" class="btn-primary">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Открыть веб-версию
+            </a>
+            <a href="#apps" class="btn-secondary">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Скачать приложение
+            </a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Сквозное шифрование</h3>
+            <p>Ваши сообщения защищены E2E-шифрованием. Никто, кроме вас и собеседника, не сможет их прочитать.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>Мгновенные сообщения</h3>
+            <p>Сообщения доставляются за миллисекунды. Поддержка текста, фото, видео и документов до 50 МБ.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h3>Анонимная регистрация</h3>
+            <p>Для входа нужен только Telegram. Никакого номера телефона или email — полная анонимность.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 20h6"/></svg>
+            </div>
+            <h3>Кроссплатформенность</h3>
+            <p>NotMess работает в браузере на любом устройстве. Поддержка ПК, планшетов и мобильных телефонов.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3>Система звезд</h3>
+            <p>Дарите звёзды и подарки другим пользователям. Поддержка каталога подарков с уникальными эмодзи.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            <h3>Тёмная и светлая темы</h3>
+            <p>Выбирайте тему под своё настроение. Тёмная тема по умолчанию с возможностью переключения.</p>
+        </div>
+    </section>
+
+    <section class="team-section" id="team">
+        <h2>Наша команда</h2>
+        <div class="team-wrapper">
+            <div class="team-arrow team-arrow-left" onclick="document.getElementById('team-scroll').scrollBy({left:-320,behavior:'smooth'})">‹</div>
+            <div class="team-grid" id="team-scroll">
+                <div class="team-card" data-contact="https://t.me/notkovvik">
+                    <img src="images/team/background.png" alt="" class="team-bg" loading="lazy">
+                    <img src="notkovvik.webp" alt="notkovvik" class="team-avatar">
+                    <h3>notkovvik</h3>
+                    <p>Основатель NotMess</p>
+                    <a href="https://t.me/notkovvik" target="_blank" class="team-btn">Связаться</a>
+                </div>
+                <div class="team-card" data-contact="https://t.me/fuckreactive">
+                    <img src="images/team/background.png" alt="" class="team-bg" loading="lazy">
+                    <img src="reactiveee.webp" alt="reactiveee" class="team-avatar">
+                    <h3>reactiveee</h3>
+                    <p>Второй основатель NotMess</p>
+                    <a href="https://t.me/fuckreactive" target="_blank" class="team-btn">Связаться</a>
+                </div>
+                <div class="team-card" data-contact="tg://user?id=7977184417">
+                    <img src="images/team/background.png" alt="" class="team-bg" loading="lazy">
+                    <img src="Семен Lei Jan.webp" alt="Семен | Lei Jan" class="team-avatar">
+                    <h3>Семен | Lei Jan</h3>
+                    <p>Пиар-Менеджер</p>
+                    <a href="tg://user?id=7977184417" target="_blank" class="team-btn">Связаться</a>
+                </div>
+                <div class="team-card" data-contact="https://t.me/redperr">
+                    <img src="images/team/background.png" alt="" class="team-bg" loading="lazy">
+                    <img src="Yellowdarkrevision.webp" alt="Yellowdarkrevision" class="team-avatar">
+                    <h3>Yellowdarkrevision</h3>
+                    <p>Дизайнер</p>
+                    <a href="https://t.me/redperr" target="_blank" class="team-btn">Связаться</a>
+                </div>
+                <div class="team-card" data-contact="https://t.me/X1r4ik">
+                    <img src="images/team/background.png" alt="" class="team-bg" loading="lazy">
+                    <img src="XIR.webp" alt="XIR" class="team-avatar">
+                    <h3>XIR</h3>
+                    <p>Второй дизайнер</p>
+                    <a href="https://t.me/X1r4ik" target="_blank" class="team-btn">Связаться</a>
+                </div>
+            </div>
+            <div class="team-arrow team-arrow-right" onclick="document.getElementById('team-scroll').scrollBy({left:320,behavior:'smooth'})">›</div>
+        </div>
+    </section>
+
+    <section class="apps" id="apps">
+        <h2>Скачайте NotMess</h2>
+        <p>Нативные приложения в разработке. Скоро будут доступны на всех платформах.</p>
+        <div class="apps-grid">
+            <a href="https://web.notmess.ru" class="app-btn">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <div class="app-btn-text">
+                    <small>Веб-версия</small>
+                    <strong>web.notmess.ru</strong>
+                </div>
+            </a>
+            <div class="app-btn">
+                <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.67-.81 1.8-1.4 2.91-1.42.07 1.2-.4 2.41-1.06 3.28-.67.87-1.76 1.52-2.84 1.43-.08-1.16.43-2.36 1-3.29z"/></svg>
+                <div class="app-btn-text">
+                    <small>Скоро в</small>
+                    <strong>App Store</strong>
+                </div>
+            </div>
+            <div class="app-btn">
+                <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.807 1.626a1 1 0 0 1 0 1.732l-2.807 1.626L15.206 12l2.492-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+                <div class="app-btn-text">
+                    <small>Скоро в</small>
+                    <strong>Google Play</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://t.me/notmesstg">Telegram канал</a>
+            <a href="https://t.me/notmess_autobot">Telegram бот</a>
+            <a href="https://github.com/notkovvik/notmess">GitHub</a>
+            <a href="#" onclick="showModal('privacy');return false">Политика конфиденциальности</a>
+            <a href="#" onclick="showModal('terms');return false">Пользовательское соглашение</a>
+        </div>
+        <p>&copy; 2026 NotMess. Все права защищены.</p>
+    </footer>
+
+    <div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)hideModal('privacy')">
+        <div class="modal-window">
+            <button class="modal-close" onclick="hideModal('privacy')">&times;</button>
+            <h2>Политика конфиденциальности</h2>
+            <p>Настоящая Политика конфиденциальности (далее — Политика) действует в отношении всей информации, которую NotMess может получить о пользователе во время использования мессенджера.</p>
+            <p><strong>1. Сбор данных.</strong> NotMess собирает минимально необходимый набор данных: Telegram username, имя и фамилию (указываются пользователем добровольно), а также chat_id для отправки кодов авторизации. Мы не запрашиваем номер телефона, email или другие личные данные.</p>
+            <p><strong>2. Хранение данных.</strong> Все данные хранятся на сервере в зашифрованном виде. Сообщения защищены сквозным шифрованием (E2E) и недоступны для просмотра администрацией сервиса.</p>
+            <p><strong>3. Передача данных третьим лицам.</strong> NotMess не передаёт персональные данные пользователей третьим лицам. Исключение — запросы от уполномоченных государственных органов РФ.</p>
+            <p><strong>4. Файлы cookie.</strong> Мы используем файлы cookie для обеспечения работы сервиса (авторизация, настройки темы и языка). Cookie не используются для отслеживания или рекламы.</p>
+            <p><strong>5. Изменение политики.</strong> Администрация оставляет за собой право вносить изменения в настоящую Политику. Актуальная версия всегда доступна по данному адресу.</p>
+            <p>Последнее обновление: 20 июня 2026 г.</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)hideModal('terms')">
+        <div class="modal-window">
+            <button class="modal-close" onclick="hideModal('terms')">&times;</button>
+            <h2>Пользовательское соглашение</h2>
+            <p>Настоящее Пользовательское соглашение (далее — Соглашение) регулирует отношения между администрацией сервиса NotMess (далее — Администрация) и пользователем (далее — Пользователь).</p>
+            <p><strong>1. Регистрация.</strong> Для использования сервиса Пользователь должен пройти авторизацию через Telegram. Указывая свои данные, Пользователь подтверждает их достоверность.</p>
+            <p><strong>2. Обязанности пользователя.</strong> Пользователь обязуется не использовать сервис для распространения спама, противоправной информации, материалов экстремистского характера, а также для любых других целей, нарушающих законодательство РФ.</p>
+            <p><strong>3. Права администрации.</strong> Администрация имеет право блокировать доступ Пользователя к сервису в случае нарушения условий Соглашения без предварительного уведомления.</p>
+            <p><strong>4. Интеллектуальная собственность.</strong> Все права на программный код, дизайн и визуальные элементы сервиса принадлежат Администрации. Копирование и использование без согласия правообладателя запрещено.</p>
+            <p><strong>5. Отказ от ответственности.</strong> Сервис предоставляется «как есть». Администрация не несёт ответственности за возможные убытки, связанные с использованием или невозможностью использования сервиса.</p>
+            <p><strong>6. Заключительные положения.</strong> Используя сервис, Пользователь подтверждает согласие с условиями настоящего Соглашения. Все споры разрешаются в соответствии с законодательством РФ.</p>
+            <p>Последнее обновление: 20 июня 2026 г.</p>
+        </div>
+    </div>
+
+    <script>
+        function showModal(id) { document.getElementById('modal-' + id).classList.add('show'); }
+        function hideModal(id) { document.getElementById('modal-' + id).classList.remove('show'); }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.show').forEach(function(m) { m.classList.remove('show'); });
+            }
+        });
+        
+        (function() {
+            var words = ['общения', 'работы', 'важных дел', 'бизнеса', 'друзей', 'семьи', 'общения'];
+            var el = document.getElementById('rotating-text');
+            if (!el) return;
+            var i = 0, pos = 0, isDeleting = false;
+            function type() {
+                var word = words[i];
+                if (isDeleting) {
+                    el.textContent = word.substring(0, pos--);
+                    if (pos < 0) { isDeleting = false; i = (i + 1) % words.length; setTimeout(type, 400); return; }
+                    setTimeout(type, 40);
+                } else {
+                    el.textContent = word.substring(0, pos++);
+                    if (pos > word.length) { isDeleting = true; setTimeout(type, 2000); return; }
+                    setTimeout(type, 100);
+                }
+            }
+            type();
+        })();
+    </script>
+</body>
+</html>
