@@ -21,7 +21,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         a { text-decoration: none; color: inherit; }
-
         .header {
             display: flex;
             align-items: center;
@@ -63,7 +62,6 @@
             transition: background .2s;
         }
         .header-btn:hover { background: #0077b3; }
-
         .hero {
             display: flex;
             flex-direction: column;
@@ -130,7 +128,6 @@
             gap: 8px;
         }
         .btn-secondary:hover { background: rgba(255,255,255,.14); }
-
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -163,7 +160,6 @@
         .feature-icon svg { width: 24px; height: 24px; stroke: #0088cc; fill: none; stroke-width: 2; }
         .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
         .feature-card p { font-size: 14px; color: #aaa; line-height: 1.6; }
-
         .apps {
             text-align: center;
             padding: 60px 24px 80px;
@@ -207,7 +203,6 @@
             padding: 2px 8px;
             border-radius: 10px;
         }
-
         .modal-overlay {
             display: none;
             position: fixed;
@@ -244,7 +239,6 @@
             line-height: 1;
         }
         .modal-close:hover { color: #fff; }
-
         .footer {
             text-align: center;
             padding: 40px 24px;
@@ -255,7 +249,6 @@
         .footer a { color: #888; transition: color .2s; }
         .footer a:hover { color: #fff; }
         .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
-
         .team-section {
             padding: 80px 24px;
             max-width: 1200px;
@@ -389,7 +382,6 @@
         }
         .team-card:hover .team-btn { transform: translateY(0); }
         .team-btn:hover { background: #0077b3; }
-
         @media (max-width: 768px) {
             .header { padding: 12px 16px; }
             .header-links a:not(.header-btn) { display: none; }
@@ -448,7 +440,6 @@
             <a href="https://web.notmess.ru" class="header-btn">Открыть веб-версию</a>
         </div>
     </header>
-
     <section class="hero">
         <img src="notmess_webp.png" alt="NotMess" class="hero-logo">
         <h1><span>Защищённый</span> мессенджер<br>для <span class="rotating-text" id="rotating-text"></span><span class="cursor">|</span></h1>
@@ -464,7 +455,6 @@
             </a>
         </div>
     </section>
-
     <section class="features" id="features">
         <div class="feature-card">
             <div class="feature-icon">
@@ -509,7 +499,6 @@
             <p>Выбирайте тему под своё настроение. Тёмная тема по умолчанию с возможностью переключения.</p>
         </div>
     </section>
-
     <section class="team-section" id="team">
         <h2>Наша команда</h2>
         <div class="team-wrapper">
@@ -561,7 +550,6 @@
             <div class="team-arrow team-arrow-right" onclick="document.getElementById('team-scroll').scrollBy({left:320,behavior:'smooth'})">›</div>
         </div>
     </section>
-
     <section class="apps" id="apps">
         <h2>Скачайте NotMess</h2>
         <p>Нативные приложения в разработке. Скоро будут доступны на всех платформах.</p>
@@ -589,7 +577,6 @@
             </div>
         </div>
     </section>
-
     <footer class="footer">
         <div class="footer-links">
             <a href="https://t.me/notmesstg">Telegram канал</a>
@@ -601,7 +588,6 @@
         </div>
         <p>&copy; 2026 NotMess. Все права защищены.</p>
     </footer>
-
     <div class="modal-overlay" id="modal-privacy" onclick="if(event.target===this)hideModal('privacy')">
         <div class="modal-window">
             <button class="modal-close" onclick="hideModal('privacy')">&times;</button>
@@ -615,7 +601,6 @@
             <p>Последнее обновление: 20 июня 2026 г.</p>
         </div>
     </div>
-
     <div class="modal-overlay" id="modal-terms" onclick="if(event.target===this)hideModal('terms')">
         <div class="modal-window">
             <button class="modal-close" onclick="hideModal('terms')">&times;</button>
@@ -630,7 +615,6 @@
             <p>Последнее обновление: 20 июня 2026 г.</p>
         </div>
     </div>
-
     <script>
         function showModal(id) { document.getElementById('modal-' + id).classList.add('show'); }
         function hideModal(id) { document.getElementById('modal-' + id).classList.remove('show'); }
@@ -639,7 +623,6 @@
                 document.querySelectorAll('.modal-overlay.show').forEach(function(m) { m.classList.remove('show'); });
             }
         });
-        
         (function() {
             var words = ['общения', 'работы', 'важных дел', 'бизнеса', 'друзей', 'семьи', 'общения'];
             var el = document.getElementById('rotating-text');
